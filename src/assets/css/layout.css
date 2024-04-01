@@ -1,0 +1,26 @@
+
+
+.left-image {
+  transition: transform 0.3s ease;
+}
+
+.right-image {
+  transition: transform 0.3s ease;
+}
+
+.left-image:hover {
+  transform: translateX(5px); /* Moves the image to the right on hover */
+}
+
+.right-image:hover {
+  transform: translateX(-5px); /* Moves the image to the left on hover */
+}
+
+.avatar-md {
+  max-width: 100px; /* Adjust the size of the middle image */
+}
+
+.info > div{
+    width:50%;
+    margin:0 auto;
+}
