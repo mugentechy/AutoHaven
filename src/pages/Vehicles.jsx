@@ -1,213 +1,60 @@
-import React,{useState} from 'react';
+import React, { useState, useEffect } from 'react';
 
-// Dummy data for cars
-const cars = [
-  {
-    id: 1,
-    name: 'Toyota Corolla',
-    image_url: '/img/tmit.jpeg',
-  },
-  {
-    id: 2,
-    name: 'Honda Civic',
-    image_url: '/img/tmit.jpeg',
-  },
-  {
-    id: 3,
-    name: 'BMW X5',
-    image_url: '/img/tmit.jpeg',
-  },
-    {
-    id: 1,
-    name: 'Toyota Corolla',
-    image_url: '/img/tmit.jpeg',
-  },
-  {
-    id: 2,
-    name: 'Honda Civic',
-    image_url: '/img/tmit.jpeg',
-  },
-  {
-    id: 3,
-    name: 'BMW X5',
-    image_url: '/img/tmit.jpeg',
-  },
-    {
-    id: 1,
-    name: 'Toyota Corolla',
-    image_url: '/img/tmit.jpeg',
-  },
-  {
-    id: 2,
-    name: 'Honda Civic',
-    image_url: '/img/tmit.jpeg',
-  },
-  {
-    id: 3,
-    name: 'BMW X5',
-    image_url: '/img/tmit.jpeg',
-  },
-    {
-    id: 1,
-    name: 'Toyota Corolla',
-    image_url: '/img/tmit.jpeg',
-  },
-  {
-    id: 2,
-    name: 'Honda Civic',
-    image_url: '/img/tmit.jpeg',
-  },
-  {
-    id: 3,
-    name: 'BMW X5',
-    image_url: '/img/tmit.jpeg',
-  },
-    {
-    id: 1,
-    name: 'Toyota Corolla',
-    image_url: '/img/for.jpg',
-  },
-  {
-    id: 2,
-    name: 'Honda Civic',
-    image_url: '/img/tmit.jpeg',
-  },
-  {
-    id: 3,
-    name: 'BMW X5',
-    image_url: '/img/tmit.jpeg',
-  },
-
-  // Add more cars as needed
-];
+import axios from 'axios';
+import { url } from "../utils/url.js";
 
 function Vehicles() {
-
-    const [make, setMake] = useState('');
-
-  const [model, setModel] = useState('');
-
-  const [price, setPrice] = useState('');
+  const [cars, setCars] = useState([]);
 
 
-  const handleSubmit = (event) => {
+  useEffect(() => {
+    // Fetch data from jiji.com
+    axios.get(`${url}/sedan`)
+      .then(response => {
+        // Assuming parseHTML function is defined and correctly parses the response data
+        const carsData = parseHTML(response.data);
+        setCars(carsData.cars);
+      })
+      .catch(error => {
+        console.error('Error fetching data from jiji.com:', error);
+      });
+  }, []);
 
-    event.preventDefault();
-
-    onSubmit({ make, model, price });
-
+  // Define parseHTML function to extract data from HTML response
+  const parseHTML = (data) => {
+    // Implement your parsing logic here
+    // For example, if data is in the format of an array of objects containing car information,
+    // you may not need to parse HTML, and instead directly return the response data
+    return data;
   };
+
+
+console.log(cars)
   return (
     <div className="cover">
-      {/* Include navigation */}
-      <div>
-        {/* Section with four info areas left & one card right with image and waves */}
-        <section className="py-5">
-          <div className="container">
-            <div className="row">
- 
-              <div className="col-md-3">
-                            <form role="form" method="post" className="text-start">
-      <div className="input-group input-group-outline mb-4">
-        <label className="form-label">Search by keyword</label>
-        <input className="form-control" type="text" />
-      </div>
-
-      <div className="input-group input-group-outline mb-3">
-        <select name="category" className="select-css">
-          <option value="">Select Category</option>
-          <option value="sedan">SEDAN & HATCHBACK</option>
-          <option value="suv">SUV</option>
-          <option value="pickups">PICK UPS</option>
-          <option value="buses">BUSES VANS & MPVS</option>
-        </select>
-      </div>
-
-      <div className="input-group input-group-outline mb-3">
-        <select name="brand" className="select-css">
-          <option value="">Select Brand</option>
-          <option value="toyota">TOYOTA</option>
-          <option value="nissan">NISSAN</option>
-          <option value="mazda">MAZDA</option>
-          <option value="subaru">SUBARU</option>
-          <option value="isuzu">ISUZU</option>
-          <option value="mistubishi">MISTUBISHI</option>
-          <option value="honda">HONDA</option>
-          <option value="bmw">BMW</option>
-          <option value="benz">BENZ</option>
-          <option value="other">OTHER</option>
-        </select>
-      </div>
-
-      <div className="input-group input-group-outline mb-3">
-        <select className="select-css" name="location">
-          <option value="">Select Location</option>
-          <option value="nairobi">NAIROBI</option>
-          <option value="mombasa">MOMBASA</option>
-        </select>
-      </div>
-
-      <div className="input-group input-group-outline mb-3">
-        <select className="select-css" name="fuel">
-          <option value="">Fuel Type</option>
-          <option value="diesel">DIESEL</option>
-          <option value="electric">ELECTRIC</option>
-          <option value="petrol">PETROL</option>
-          <option value="hybrid">HYBRID</option>
-        </select>
-      </div>
-
-      <div className="input-group input-group-outline mb-3">
-        <select className="select-css" name="transmission">
-          <option value="">Fuel Transmission</option>
-          <option value="automatic">AUTOMATIC</option>
-          <option value="manual">MANUAL</option>
-          <option value="hybrid">HYBRID</option>
-        </select>
-      </div>
-
-      <div className="form-check">
-        <input name="promotion" type="checkbox" className="form-check-input" />
-        <label className="custom-control-label" htmlFor="customCheckDisabled">Promotion</label>
-      </div>
-
-      <div className="form-check">
-        <input type="checkbox" name="used" className="form-check-input" />
-        <label className="custom-control-label">Brand New</label>
-      </div>
-
-      <div className="input-group input-group-dynamic pt-4">
-        <button type="submit" className="btn bg-gradient-warning w-100 my-4 mb-2">
-          <span className="btn-inner--icon"><i className="fa fa-search"></i></span>
-          <span className="btn-inner--text">Search</span>
-        </button>
-      </div>
-    </form>
-              </div>
-              <div className="col-md-9">
-                {/* Loop through cars */}
-                <div className="row">
-                  {cars.map(car => (
-                    <div className="col-md-3 mt-4" key={car.id}>
-                      <div className="card shadow-lg mt-4">
-                        <div className="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                          <a className="d-block blur-shadow-image">
-                            <img src={car.image_url} style={{width: '100%'}} />
-                          </a>
-                        </div>
-                        <a href={`/vehicle/${car.id}`}>
-                          <div className="card-body">
-                            <h6>{car.name}</h6>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-                  ))}
+      <div className="container">
+        <div className="row">
+          {cars.map(car => (
+             
+            <div className="col-md-3 mt-4" key={car.id}>
+            <a href={`/vehicle${car.href}`}>
+              <div className="card shadow-lg mt-4">
+                <div className="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+             
+                    <img src={car.image_url} alt={car.name} style={{ width: '100%' }} />
+                 
                 </div>
+               
+                  <div className="card-body">
+                    <h6>{car.name}</h6>
+                  </div>
+               
               </div>
+               </a>
             </div>
-          </div>
-        </section>
+           
+          ))}
+        </div>
       </div>
     </div>
   );

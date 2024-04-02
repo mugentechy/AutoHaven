@@ -1,6 +1,10 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Carousel, Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
+import axios from 'axios';
+import { url } from "../utils/url.js";
+import { useParams } from 'react-router-dom';
+
 
 const car = {
   id: 1,
@@ -24,17 +28,47 @@ const images = [
 ];
 
 function Vehicle() {
+  const { location, vehicleId } = useParams();
+
+    const [cars, setCars] = useState([]);
+    console.log(location)
+
+    
+
+  useEffect(() => {
+    // Fetch data from jiji.com
+    axios.get(`${url}/single/sedan/${location}/cars/${vehicleId}`)
+      .then(response => {
+        // Assuming parseHTML function is defined and correctly parses the response data
+        const carsData = parseHTML(response.data);
+        setCars(carsData.car_details);
+      })
+      .catch(error => {
+        console.error('Error fetching data from jiji.com:', error);
+      });
+  }, []);
+
+  // Define parseHTML function to extract data from HTML response
+  const parseHTML = (data) => {
+    // Implement your parsing logic here
+    // For example, if data is in the format of an array of objects containing car information,
+    // you may not need to parse HTML, and instead directly return the response data
+    return data;
+  };
+
+console.log(cars)
+
   return (
  <Container className="mt-4">
       <Row>
         <Col md={6}>
           <Carousel style={{ width: "100%", maxWidth: "500px" }}>
-            {images.map((image) => (
-              <Carousel.Item key={image.id}>
+            {cars?.images?.map((image,index) => (
+              <Carousel.Item key={index}>
                 <img
                   className="d-block w-100"
-                  src={image.image_url}
-                  alt={`Slide ${image.id}`}
+                  src={image}
+                
                 />
               </Carousel.Item>
             ))}
@@ -43,15 +77,11 @@ function Vehicle() {
         <Col md={6}>
           <Card>
             <Card.Body>
-              <Card.Title>{car.name}</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">{car.brand} - {car.model}</Card.Subtitle>
+              <Card.Title>{cars.name}</Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">Ksh {parseInt(cars.price).toLocaleString()}</Card.Subtitle>
               <Card.Text>
-                <strong>Category:</strong> {car.category}<br />
-                <strong>Transmission:</strong> {car.transmission}<br />
-                <strong>Year:</strong> {car.year}<br />
-                <strong>Drive Type:</strong> {car.drive_type}<br />
-                <strong>Engine:</strong> {car.engine}<br />
-                <strong>Fuel Type:</strong> {car.fuel_type}<br />
+              {cars.description}
+      
               </Card.Text>
             </Card.Body>
           </Card>

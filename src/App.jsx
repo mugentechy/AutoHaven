@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route,useLocation } from "react-router-dom";
 import Home from './pages/Home'; 
 import Vehicle from './pages/Vehicle'; 
 import Vehicles from './pages/Vehicles';
@@ -9,20 +9,28 @@ import Nav from './components/Nav';
 import './assets/css/layout.css';
 import ScrollToTop from './components/ScrollToTop';
 
+function Main() {
+  const location = useLocation(); // Using useLocation inside Main component
+  return (
+    <>
+      <Nav />
+      <ScrollToTop/>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/vehicle/:location/cars/:vehicleId" element={<Vehicle location={location}/>} />
+        <Route path="/vehicles" element={<Vehicles  />} />
+      </Routes>
+      <Footer />
+    </>
+  );
+}
+
 function App() {
   return (
     <Router>
-      <Nav />
-      <ScrollToTop/>
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-         <Route path="/About" element={<About />} />
-         <Route path="/Contact" element={<Contact />} />
-        <Route path="/vehicle/:id" element={<Vehicle />} />
-        <Route path="/vehicles" element={<Vehicles />} />
-      </Routes>
-      <Footer />
+      <Main /> 
     </Router>
   );
 }

@@ -12,15 +12,15 @@ const Nav = () => {
   ];
 
   const officeContacts = [
-    { type: 'Office', contact: '+(254) 700888666' },
-    { type: 'Email', contact: 'info@alsmotors.co.ke' }
+    { type: 'Office', contact: '+(254) 700577453' },
+    { type: 'Email', contact: 'mugentechy@gmail.com' }
   ];
 
   return (
     <Navbar expand="lg" bg="white" sticky="top" style={{ minHeight: '80px' }}>
       <Container>
         <Navbar.Brand href="/" rel="tooltip" title="Alsmotors" data-placement="bottom">
-          <img src="./img/favicon.png" width="100%" height="100vh" alt="" />
+          <img src="./img/our-cars.svg" width="100%" height="100vh" alt="" />
           Motors
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -51,16 +51,17 @@ const Nav = () => {
                 <div className="arrow ms-auto ms-md-2"></div>
               </a>
             </li>
-            <NavDropdown title={<><Shop className="opacity-6 me-2 text-md" />Shop</>}>
-              <NavDropdown.Item href="/collection?location=nairobi">
-                <h6 className="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0">Nairobi</h6>
-                <span className="text-sm">Explore our collection</span>
-              </NavDropdown.Item>
-              <NavDropdown.Item href="/collection?location=mombasa">
-                <h6 className="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0">Mombasa</h6>
-                <span className="text-sm">Explore our collection</span>
-              </NavDropdown.Item>
-            </NavDropdown>
+
+                <li className="nav-item mx-2">
+              <a href="/vehicles" className="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center">
+                <Shop className="opacity-6 me-2 text-md" />
+                Vehicles
+                <div className="arrow ms-auto ms-md-2"></div>
+              </a>
+            </li>
+
+
+          
             <li className="nav-item ms-lg-auto cursor-pointer">
               <a href="/contact" className="nav-link nav-link-icon me-2">
                 <TelephoneFill className="text-lg  me-1 text-md" />
