@@ -17,11 +17,11 @@ const Nav = () => {
   ];
 
   return (
-    <Navbar expand="lg" bg="white" sticky="top" style={{ minHeight: '80px' }}>
+    <Navbar expand="lg" bg="white" sticky="top" style={{ maxHeight: '90px',boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)' }}>
       <Container>
         <Navbar.Brand href="/" rel="tooltip" title="Alsmotors" data-placement="bottom">
-          <img src="./img/our-cars.svg" width="100%" height="100vh" alt="" />
-          Motors
+          <img src="./img/our-cars.svg" alt="" />
+          AutoHaven
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

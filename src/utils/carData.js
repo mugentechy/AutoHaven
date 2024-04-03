@@ -1,3 +1,43 @@
+    
+export const carLocation = [
+      "Kajiado",
+    "Kiambu",
+    "Mombasa",
+    "Nairobi",
+    "Nakuru",
+    "Baringo",
+    "Bomet",
+    "Bungoma",
+    "Busia",
+    "Elgeyo-Marakwet",
+    "Embu",
+    "Garissa",
+    "Homa Bay",
+    "Isiolo",
+    "Kakamega",
+    "Kericho",
+    "Kilifi",
+    "Kirinyaga",
+    "Kisii",
+    "Kisumu",
+    "Kitui",
+    "Kwale",
+    "Laikipia",
+    "Lamu",
+    "Machakos",
+    "Makueni",
+    "Mandera",
+    "Marsabit",
+    "Meru",
+    "Migori",
+    "Murang'a",
+    "Nandi",
+    "Narok",
+    "Nyamira",
+    "Nyandarua"
+];
+
+  
     export const carBrands = [
     {
         id: 1,

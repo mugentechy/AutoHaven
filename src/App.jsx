@@ -19,8 +19,9 @@ function Main() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/vehicle/:location/cars/:vehicleId" element={<Vehicle location={location}/>} />
+        <Route path="/vehicle/:location/cars/:vehicleId" element={<Vehicle/>} />
         <Route path="/vehicles" element={<Vehicles  />} />
+
       </Routes>
       <Footer />
     </>

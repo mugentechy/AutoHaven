@@ -1,7 +1,81 @@
-from flask import jsonify
+from flask import jsonify,request
 from bs4 import BeautifulSoup
 from app.home import blueprint
 import requests
+
+
+@blueprint.route('/search', methods=['GET'])
+def search_vehicle():
+    search_query = request.args.get('q', '') 
+    location = request.args.get('location', '')
+    min_price = request.args.get('price_min', '')  # Get min_price query parameter
+    max_price = request.args.get('price_max', '')  
+    base_url = 'https://jiji.co.ke'
+
+    api_url = base_url
+    if location:
+        api_url += f'/{location}/cars'
+    if not location:
+        api_url +=  f'/cars/'
+    if search_query:
+        api_url += f'?query={search_query}'
+    if not search_query:
+        api_url +=f'?'
+
+    if min_price:
+        api_url += f'&price_min={min_price}'
+    if max_price:
+        api_url += f'&price_max={max_price}'
+
+    response = requests.get(api_url)
+    print(api_url)
+
+    if response.status_code == 200:
+        # Parse the HTML content using BeautifulSoup
+        soup = BeautifulSoup(response.content, 'html.parser')
+        
+        # Find all elements containing information about each car
+        car_elements = soup.select('.b-list-advert-base')
+        
+        # Extract information for each car
+        cars = []
+        for car_element in car_elements:
+
+            car_name = car_element.select_one('.qa-advert-list-item-title').text.strip()
+            image_url = car_element.select_one('.b-list-advert-base__img img')['src']
+            price = car_element.select_one('.qa-advert-price').text.strip()
+            description = car_element.select_one('.b-list-advert-base__description-text').text.strip()
+            # location = car_element.select_one('.b-list-advert__region__text').text.strip()
+            a_tag = soup.find("a", class_="b-list-advert-base")["href"]
+            
+            # Create a dictionary representing the car and add it to the list
+            cars.append({
+                'name': car_name,
+                'image_url': image_url,
+                'price': price,
+                'description': description,
+                'href': a_tag 
+                # 'location': location
+            })
+        
+        # Create a JSON response containing the list of cars
+        response_data = {
+            'status': 'success',
+            'cars': cars
+        }
+        return jsonify(response_data), 200
+    else:
+        return jsonify({'status': 'error', 'message': 'Failed to fetch data from jiji.co.ke/cars'}), response.status_code
+
+
+
+    if response.status_code == 200:
+        data = response.json()
+        print(data)
+        return jsonify(data)
+    else:
+        abort(response.status_code)
+
 
 
 
