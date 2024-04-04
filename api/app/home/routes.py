@@ -10,6 +10,13 @@ def search_vehicle():
     location = request.args.get('location', '')
     min_price = request.args.get('price_min', '')  # Get min_price query parameter
     max_price = request.args.get('price_max', '')  
+    page = int(request.args.get('page', 2))
+    verify = request.args.get('verify', '') 
+    make = request.args.get('make', '') 
+    condition = request.args.get('condition', '') 
+    body = request.args.get('body', '')
+
+    
     base_url = 'https://jiji.co.ke'
 
     api_url = base_url
@@ -21,23 +28,30 @@ def search_vehicle():
         api_url += f'?query={search_query}'
     if not search_query:
         api_url +=f'?'
-
     if min_price:
         api_url += f'&price_min={min_price}'
     if max_price:
         api_url += f'&price_max={max_price}'
+    if verify:
+        api_url += f'&filter_id_verify={verify}'
+
+    if make:
+        api_url += f'&filter_attr_1_make={make}'
+
+    if condition:
+        api_url += f'&filter_attr_100_condition={condition}'
+
+    if body:
+        api_url += f'&filter_attr_1164_body={body}'
+
+    api_url += f'?page={page}'
 
     response = requests.get(api_url)
     print(api_url)
 
     if response.status_code == 200:
-        # Parse the HTML content using BeautifulSoup
         soup = BeautifulSoup(response.content, 'html.parser')
-        
-        # Find all elements containing information about each car
-        car_elements = soup.select('.b-list-advert-base')
-        
-        # Extract information for each car
+        car_elements = soup.select('.b-list-advert__gallery__item')
         cars = []
         for car_element in car_elements:
 
@@ -45,20 +59,18 @@ def search_vehicle():
             image_url = car_element.select_one('.b-list-advert-base__img img')['src']
             price = car_element.select_one('.qa-advert-price').text.strip()
             description = car_element.select_one('.b-list-advert-base__description-text').text.strip()
-            # location = car_element.select_one('.b-list-advert__region__text').text.strip()
-            a_tag = soup.find("a", class_="b-list-advert-base")["href"]
-            
-            # Create a dictionary representing the car and add it to the list
+            ad_item = car_element.select_one('.b-list-advert-base__item-attr').text.strip()
+            a_tag = car_element.select_one('a')['href']
+
             cars.append({
                 'name': car_name,
                 'image_url': image_url,
                 'price': price,
                 'description': description,
-                'href': a_tag 
-                # 'location': location
+                'href': a_tag, 
+               
             })
-        
-        # Create a JSON response containing the list of cars
+
         response_data = {
             'status': 'success',
             'cars': cars

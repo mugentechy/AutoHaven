@@ -33,10 +33,7 @@ const Nav = () => {
                   <span className="text-xs">{item.time}</span>
                 </NavDropdown.Item>
               ))}
-              <NavDropdown.Item>
-                <p className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Ngong road, next to Prestige Plaza - Nairobi, Kenya</p>
-                <div className="arrow ms-auto ms-md-2"></div>
-              </NavDropdown.Item>
+   
               {officeContacts.map((item, index) => (
                 <NavDropdown.Item key={index}>
                   <span className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">{item.type}</span>

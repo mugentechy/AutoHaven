@@ -33,7 +33,7 @@ function About() {
         <Row className="mt-5">
           <Col md={8} className="d-flex justify-content-center flex-column text-lg-start text-center">
             <h2 className="mb-4">About</h2>
-            <p className="mb-2">Discover the AL Siddique Motors difference – where your needs always come first. Our team of automotive experts is dedicated to providing great customer service and building lasting relationships. With a wide range of cars, strong relationships with suppliers, and a commitment to customer confidence and support, we're the dealership that delivers.</p>
+            <p className="mb-2">Discover the difference – where your needs always come first. Our team of automotive experts is dedicated to providing great customer service and building lasting relationships. With a wide range of cars, strong relationships with suppliers, and a commitment to customer confidence and support, we're the dealership that delivers.</p>
             <h6 className="mt-4">Why You Should Buy From Us</h6>
             <ul className="m-lg-2 m-auto">
               <li className="mb-2">Quality and certified pre-owned vehicles</li>
@@ -44,8 +44,7 @@ function About() {
               <li className="mb-2">Convenient location and hours of operation</li>
               <li className="mb-2">Test drive opportunities and vehicle demonstrations</li>
             </ul>
-            <p>Come see us today at our Ngong Road location in Nairobi and experience the personalized care and professionalism you deserve.</p>
-            <p className="blockquote my-3 ps-2">
+            <p>Whether you're a seasoned car enthusiast or a first-time buyer, AutoHaven is your trusted partner on the road to automotive excellence. Start your journey with us today!</p><p className="blockquote my-3 ps-2">
               <span className="text-bold">“We purchased a vehicle and had a great experience! The staff is very friendly and answered all our questions. Hassle-free test drive and all information clearly presented.”</span>
               <br />
               <small className="blockquote-footer">

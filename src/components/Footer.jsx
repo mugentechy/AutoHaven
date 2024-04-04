@@ -11,8 +11,8 @@ const Footer = () => {
               <Col md={4} className="mb-4 ms-auto">
                 <div>
                   <h6 className="font-weight-bolder mb-4 text-white">
-                    <img src="/img/logo.png" width="24" height="24" alt="" />
-                    Al siddique Motors
+                    <img src="/img/our-cars.svg" width="24" height="24" alt="" />
+                    AutoHaven
                   </h6>
                   <p className="text-sm text-white">we provide maintenance and repair services from certified technicians who use only genuine parts. Our team is dedicated to ensuring that your vehicle remains in top condition, and we offer convenient scheduling options to minimize disruptions to your day.</p>
                 </div>
@@ -124,7 +124,7 @@ const Footer = () => {
               <Col>
                 <div className="text-center">
                   <p className="text-dark my-4 text-sm text-white font-weight-normal">
-                    &copy;AL Siddique Motors
+                    &copy;AutoHaven
                   </p>
                 </div>
               </Col>
