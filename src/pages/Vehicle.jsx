@@ -6,6 +6,7 @@ import { url } from "../utils/url.js";
 import { useParams } from 'react-router-dom';
 
 
+
 const car = {
   id: 1,
   name: "Tesla Model S",
@@ -33,13 +34,10 @@ function Vehicle() {
     const [cars, setCars] = useState([]);
     console.log(location)
 
-    
-
+  
   useEffect(() => {
-    // Fetch data from jiji.com
     axios.get(`${url}/single/sedan/${location}/cars/${vehicleId}`)
       .then(response => {
-        // Assuming parseHTML function is defined and correctly parses the response data
         const carsData = parseHTML(response.data);
         setCars(carsData.car_details);
       })
@@ -48,11 +46,7 @@ function Vehicle() {
       });
   }, []);
 
-  // Define parseHTML function to extract data from HTML response
   const parseHTML = (data) => {
-    // Implement your parsing logic here
-    // For example, if data is in the format of an array of objects containing car information,
-    // you may not need to parse HTML, and instead directly return the response data
     return data;
   };
 

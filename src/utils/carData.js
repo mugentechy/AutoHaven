@@ -103,53 +103,42 @@ export const carLocation = [
   ];
 
 
-
-    export const vehItems = [
-    { href: "/collection?brand=audi", imageUrl: "/img/logos/audi.png", name: "Audi" },
-    { href: "/collection?brand=lexus", imageUrl: "/img/logos/lex.png", name: "Lexus" },
-    { href: "/collection?brand=ford", imageUrl: "/img/logos/ford.png", name: "Ford" },
-    { href: "/collection?brand=subaru", imageUrl: "/img/logos/sub.png", name: "Subaru" },
-    { href: "/collection?brand=landrover", imageUrl: "/img/logos/land.png", name: "Land Rover" },
-    { href: "/collection?brand=volvo", imageUrl: "/img/logos/vol.png", name: "Volvo" },
-    { href: "/collection?brand=benz", imageUrl: "/img/logos/mer.png", name: "Mercedes Benz" },
-    { href: "/collection?brand=mazda", imageUrl: "/img/logos/maz.png", name: "Mazda" },
-    { href: "/collection?brand=toyota", imageUrl: "/img/logos/toyo.png", name: "Toyota" },
-    { href: "/collection?brand=nissan", imageUrl: "/img/logos/nissan.png", name: "Nissan" },
-    { href: "/collection?brand=volswagon", imageUrl: "/img/logos/voks.png", name: "Volkswagen" },
-    { href: "/collection?brand=pegout", imageUrl: "/img/logos/peg.png", name: "Peugeot" },
-  ];
-
-
-
-  export const brandItems = [
-    { href: "/collection?brand=audi", imageUrl: "/img/logos/audi.png", name: "Audi" },
-    { href: "/collection?brand=lexus", imageUrl: "/img/logos/lex.png", name: "Lexus" },
-    { href: "/collection?brand=ford", imageUrl: "/img/logos/ford.png", name: "Ford" },
-    { href: "/collection?brand=subaru", imageUrl: "/img/logos/sub.png", name: "Subaru" },
-    { href: "/collection?brand=landrover", imageUrl: "/img/logos/land.png", name: "Land Rover" },
-    { href: "/collection?brand=volvo", imageUrl: "/img/logos/vol.png", name: "Volvo" },
-    { href: "/collection?brand=benz", imageUrl: "/img/logos/mer.png", name: "Mercedes Benz" },
-    { href: "/collection?brand=mazda", imageUrl: "/img/logos/maz.png", name: "Mazda" },
-    { href: "/collection?brand=toyota", imageUrl: "/img/logos/toyo.png", name: "Toyota" },
-    { href: "/collection?brand=nissan", imageUrl: "/img/logos/nissan.png", name: "Nissan" },
-    { href: "/collection?brand=volswagon", imageUrl: "/img/logos/voks.png", name: "Volkswagen" },
-    { href: "/collection?brand=pegout", imageUrl: "/img/logos/peg.png", name: "Peugeot" },
-  ];
-
   // List of items for vehicle types
   export const typeItems = [
-    { href: "/collection?type=sport", imageUrl: "/img/type/sport-car.png", name: "Sports Car" },
-    { href: "/collection?type=convertibles", imageUrl: "/img/type/cabriolet.png", name: "Convertibles" },
-    { href: "/collection?type=sedan", imageUrl: "/img/type/sedan.png", name: "Sedans" },
-    { href: "/collection?type=suv", imageUrl: "/img/type/suv.png", name: "SUVs" },
-    { href: "/collection?type=pickups", imageUrl: "/img/type/pickup-truck.png", name: "Trucks" },
-    { href: "/collection?type=van", imageUrl: "/img/type/van.png", name: "Vans" },
-    { href: "/collection?type=wagon", imageUrl: "/img/type/wagon.png", name: "Wagons" },
-    { href: "/collection?type=motorcycles", imageUrl: "/img/type/motorcycle.png", name: "Motorcycles" },
+    { imageUrl: "/img/type/convertibles.png", name: "convertibles" },
+    { imageUrl: "/img/type/coupes.png", name: "coupes" },
+    { imageUrl: "/img/type/crossovers.png", name: "crossovers" },
+    { imageUrl: "/img/type/hatch.png", name: "hatch" },
+    { imageUrl: "/img/type/hybrids.png", name: "hybrids" },
+    { imageUrl: "/img/type/luxury.png", name: "luxury" },
+    { imageUrl: "/img/type/sedans.png", name: "sedans" },
+
+    { imageUrl: "/img/type/sportscar.png", name: "sportscar" },
+    { imageUrl: "/img/type/suv.png", name: "suv" },
+    { imageUrl: "/img/type/trucks.png", name: "trucks" },
+    { imageUrl: "/img/type/vans.png", name: "vans" },
+   { imageUrl: "/img/type/wagons.png", name: "wagons" },
+
+
   ];
   export const testimonials = [
 
   {
+
+    name: 'Felicia Queen',
+
+    image: '/img/bruce.jpg',
+
+    text:
+
+      'We purchased a vehicle and had a great experience! The staff is very friendly and answered all our questions. Hassle-free test drive and all information clearly presented.',
+
+    rating: 5,
+
+    background: '/img/bgimg03.jpg',
+
+  },
+    {
 
     name: 'Felicia Queen',
 
@@ -218,13 +207,6 @@ export const carLocation = [
     }
   ];
 
-
- export  const locationOptions = [
-  { value: "", label: "Location" },
-  { value: "nairobi", label: "NAIROBI" },
-  { value: "mombasa", label: "MOMBASA" },
-];
-
 export const brandOptions = [
   { value: "", label: "All Brand" },
   { value: "toyota", label: "TOYOTA" },
@@ -239,13 +221,8 @@ export const brandOptions = [
   { value: "other", label: "OTHER" },
 ];
 
-export const categoryOptions = [
-  { value: "", label: "All Category" },
-  { value: "sedan", label: "SEDAN & HATCHBACK" },
-  { value: "suv", label: "SUV" },
-  { value: "pickups", label: "PICK UPS" },
-  { value: "buses", label: "BUSES VANS & MPVS" },
-];
+
+
 
 
 

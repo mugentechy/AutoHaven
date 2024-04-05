@@ -1,20 +1,70 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Carousel } from 'react-bootstrap';
+import axios from 'axios';
+import { url } from "../utils/url.js";
 import SearchComponent from '../components/SearchComponent';
 import Testimonial from '../components/Testimonial';
 import CarBrandsCarousel from '../components/CarBrandsCarousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { brandItems,locationOptions,brandOptions, carBrands,items,categoryOptions, testimonials, typeItems } from '../utils/carData';
+import { carLocation,makeOptions,vehicleTypes,brandOptions, carBrands,items, testimonials, typeItems } from '../utils/carData';
+import Loading from '../components/loading';
 
 import { Button, Container, Row, Col, Nav } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
 
 function Home() {
   const [activeIndex, setActiveIndex] = useState(0);
-const [activeTab, setActiveTab] = useState('brand');
+
+const [body, setBody] = useState('');
+const [filteredCars, setFilteredCars] = useState([]);
+const [selectedLocation, setSelectedLocation] = useState('');
+  const [make, setMake] = useState('');
+  const [loading, setLoading] = useState(true);
+
+
+    useEffect(() => {
+    setLoading(true);
+    let apiUrl = `${url}/search?page=1`;
+
+    if (selectedLocation) {
+      apiUrl += `&location=${selectedLocation}`;
+    }
+
+    if (make){
+      apiUrl += `&make=${make}`;
+    }
+
+    if (body){
+      apiUrl += `&body=${body}`;
+    }
+
+
+    axios.get(apiUrl)
+      .then(response => {
+        const carsData = parseHTML(response.data);
+        console.log(carsData)
+        setFilteredCars(carsData.cars);
+         setLoading(false);
+
+      })
+      .catch(error => {
+        console.error('Error searching vehicles:', error);
+      });
+  }, [body,make, selectedLocation]);
+
+
+
+  const clearSearch = () => {
+         setMake('');
+         setBody('');
+         setSelectedLocation('');
+  };
+
+  const parseHTML = (data) => {
+    return data;
+  };
+
   const handlePrev = () => {
     setActiveIndex(prevIndex => (prevIndex === 0 ? items.length - 1 : prevIndex - 1));
   };
@@ -25,7 +75,7 @@ const [activeTab, setActiveTab] = useState('brand');
 
   return (
     <>
-<Carousel style={{ backgroundImage: `url(/img/road.jpg)`, height: '500px' }} 
+<Carousel className='bg-gradient bg-dark card-frame bg-gradient-dark opacity-6' style={{ height: '500px' }} 
 activeIndex={activeIndex} onSelect={setActiveIndex}>
   {items.map(item => (
     <Carousel.Item key={item.id}>
@@ -56,53 +106,63 @@ activeIndex={activeIndex} onSelect={setActiveIndex}>
 </div>
 
 
-<div className="card mx-3 mx-md-4 mt-n7" style={{ padding: "0 !important" }}>
+
   <div className="container">
-    <form role="form" method="post">
-      <div className="row">
-        <div className="col-lg-12 mx-auto py-3">
+  
+    <form  role="form" method="post">
+      <div className="card p-4 row">
+        <div className="col-lg-8 mx-auto">
           <div className="row">
             <div className="col-lg-6">
               <h6>I WANT TO BUY</h6>
             </div>
             <div className="col-lg-6">
-              <button type="button" className="btn btn-outline-warning">AL Siddique Motors</button>
-            </div>
+            <button type="button" onClick={clearSearch} className="btn btn-outline-warning">
+  Clear Search
+</button>
+             
+          
+            </div> 
           </div>
           <div className="row">
-            <div className="col-lg-3 mt-2">
+            <div className="col-lg-4 mt-2">
               <div className="input-group">
-                <select className="select-css" onChange={({ target }) => setLocation(target.value)} name="location">
-                  {locationOptions.map(option => (
-                    <option key={option.value} value={option.value}>{option.label}</option>
+                <select
+                  className="search-input"
+                  value={selectedLocation}
+                  onChange={(e) => setSelectedLocation(e.target.value)}
+                >
+                  {carLocation.map(option => (
+                    <option key={option} value={option.toLowerCase()}>{option}</option>
                   ))}
                 </select>
               </div>
             </div>
-            <div className="col-lg-3 mt-2">
+
+            <div className="col-lg-4 mt-2">
               <div className="input-group">
-                <select name="brand" onChange={({ target }) => setBrand(target.value)} className="select-css">
-                  {brandOptions.map(option => (
-                    <option key={option.value} value={option.value}>{option.label}</option>
+                <select
+                  className="search-input"
+                  value={make}
+                  onChange={(e) => setMake(e.target.value)}
+                >
+                  {makeOptions.map(option => (
+                    <option key={option} value={option}>{option}</option>
                   ))}
                 </select>
               </div>
             </div>
-            <div className="col-lg-3 mt-2">
+            <div className="col-lg-4 mt-2">
               <div className="input-group">
-                <select name="category" onChange={({ target }) => setCategory(target.value)} className="select-css">
-                  {categoryOptions.map(option => (
-                    <option key={option.value} value={option.value}>{option.label}</option>
+                <select
+                  className="search-input"
+                  value={body}
+                  onChange={(e) => setBody(e.target.value)}
+                >
+                  {vehicleTypes.map(option => (
+                    <option key={option} value={option}>{option}</option>
                   ))}
                 </select>
-              </div>
-            </div>
-            <div className="col-lg-3 mt-2">
-              <div className="input-group">
-                <button type="submit" className="btn bg-gradient-warning">
-                  <span className="btn-inner--icon"><i className="fa fa-search"></i></span>
-                  <span className="btn-inner--text">Search</span>
-                </button>
               </div>
             </div>
           </div>
@@ -110,7 +170,7 @@ activeIndex={activeIndex} onSelect={setActiveIndex}>
       </div>
     </form>
   </div>
-</div>
+
 
 
 
@@ -124,7 +184,7 @@ activeIndex={activeIndex} onSelect={setActiveIndex}>
         <ul className="nav nav-pills nav-fill p-1" id="pills-tab" role="tablist">
           <li className="nav-item" role="presentation">
             <a className="nav-link mb-0 px-0 py-1" type="button">
-              ({items.length}) Vehicle(s) Found
+              (20) Vehicle(s) Found
             </a>
           </li>
         </ul>
@@ -133,9 +193,35 @@ activeIndex={activeIndex} onSelect={setActiveIndex}>
   </div>
 </div>
 
+<div className="container">
+<div className="row">
+  {loading ? (
+    <Loading itemCount={6} itemHeight={300} />
+  ) : (
+    filteredCars.slice(0, 6).map(car => (
+      <div className="col-md-4 mt-4" key={car.id}>
+        <a href={`/vehicle${car.href}`}>
+          <div className="card shadow-lg mt-4">
+            <div className="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div className="image-container" style={{ height: '200px' }}>
+                <img src={car.image_url} alt={car.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+            </div>
+            <div className="card-body">
+              <p className="p-header">{car.price}</p>
+              <h6>{car.name}</h6>
+              <p className="p-description">{car.description}</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    ))
+  )}
+</div>
 
 
-      <SearchComponent items={carBrands} />
+</div>
+
 
       <div className="row align-items-center">
         <div className="col-4">
@@ -151,19 +237,9 @@ activeIndex={activeIndex} onSelect={setActiveIndex}>
         </div>
       </div>
 
-      <div className="row" style={{ backgroundImage: `url(/img/car-bg.jpg)`, height: '500px' }}>
-
-        {testimonials.map((testimonial, index) => (
-          <Testimonial
-            key={index}
-            image={testimonial.image}
-            name={testimonial.name}
-            text={testimonial.text}
-            rating={testimonial.rating}
-            background={testimonial.background}
-          />
-        ))}
-      </div>
+<div  style={{ backgroundImage: `url(/img/road.jpg)` }}>
+  <Testimonial testimonials={testimonials} />
+</div>
 
       <div className="container">
         <div className="row mt-5">
@@ -199,28 +275,12 @@ activeIndex={activeIndex} onSelect={setActiveIndex}>
       </Col>
     </Row>
 
-    <Tabs defaultActiveKey="brand" transition={false} id="noanim-tab-example" className="mb-3">
 
-      <Tab eventKey="brand" title="Brand">
-        <Row className="justify-content-start">
-          {brandItems.map((item, index) => (
-            <Col key={index} xs={6} sm={3} lg={2} className="mb-3">
-              <Card bg="dark" text="white" className="h-100 d-flex flex-column justify-content-between ">
-                <Card.Img src={item.imageUrl} alt="Card image" style={{ height: '100%' }} />
-                <Card.ImgOverlay>
-                  <Card.Title>{item.name}</Card.Title>
-                </Card.ImgOverlay>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      </Tab>
-      <Tab eventKey="make" title="Make">
-        <Row className="justify-content-start pb-2">
+        <Row>
           {typeItems.map((item, index) => (
-            <Col key={index} xs={6} sm={3} lg={2} className="mb-3">
-              <Card bg="dark" text="white" className="h-100 d-flex flex-column justify-content-between mb-3">
-                <Card.Img src={item.imageUrl} alt="Card image" style={{ height: '100%' }}/>
+            <Col key={index} xs={6} md={3} className="mb-3">
+              <Card bg="white" text="black" className="shadow-lg">
+                <Card.Img src={item.imageUrl} alt="Card image" className="p-4"/>
                 <Card.ImgOverlay>
                   <Card.Title>{item.name}</Card.Title>
                 </Card.ImgOverlay>
@@ -228,8 +288,7 @@ activeIndex={activeIndex} onSelect={setActiveIndex}>
             </Col>
           ))}
         </Row>
-      </Tab>
-    </Tabs>
+   
   </Container>
  
     </>

@@ -130,6 +130,9 @@ const Footer = () => {
               </Col>
             </Row>
           </Container>
+           <div className="overlay"></div>
+
+
         </footer>
    
 

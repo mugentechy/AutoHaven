@@ -21,7 +21,7 @@ const Nav = () => {
       <Container>
         <Navbar.Brand href="/" rel="tooltip" title="Alsmotors" data-placement="bottom">
           <img src="./img/our-cars.svg" alt="" />
-          AutoHaven
+          Haven
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
