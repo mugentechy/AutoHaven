@@ -1,7 +1,72 @@
 from flask import jsonify,request
 from bs4 import BeautifulSoup
 from app.home import blueprint
+from app import mail
+from flask_mail import Message
 import requests
+
+
+
+
+@blueprint.route('/contact', methods=['POST'])
+def contact_submit():
+    # Get form data from the request
+    form_data = request.json.get('formData')
+
+    # Send email
+    sender_email = 'bmugenya26@gmail.com'  # Enter your email address
+    receiver_email = 'bmugenya26@gmail.com'  # Enter recipient email address
+
+    msg = Message(subject='New Contact Form Submission',
+                  sender=sender_email,
+                  recipients=[receiver_email])
+    
+    # Construct email body
+    email_body = f"""
+    Name: {form_data['name']}
+    Email: {form_data['email']}
+    Message: {form_data['message']}
+    """
+    
+    msg.body = email_body
+
+    # Send the message via Flask-Mail
+    mail.send(msg)
+
+    return jsonify({'message': 'Contact form submitted successfully!'}), 200
+
+@blueprint.route('/message', methods=['POST'])
+def message():
+    # Get form data from the request
+    form_data = request.json.get('formData')
+    cars_data = request.json.get('cars')
+
+    # Send email
+    sender_email = 'bmugenya26@gmail.com'  # Enter your email address
+    receiver_email = 'bmugenya26@gmail.com'  # Enter recipient email address
+
+    msg = Message(subject='New Form Submission',
+                  sender=sender_email,
+                  recipients=[receiver_email])
+    
+    # Construct email body
+    email_body = f"""
+    Name: {form_data['name']}
+    Email: {form_data['email']}
+    Message: {form_data['message']}
+    
+    Vehicle Details:
+    Name: {cars_data['name']}
+    Price: {cars_data['price']}
+    Description: {cars_data['description']}
+    """
+    
+    msg.body = email_body
+
+    # Send the message via Flask-Mail
+    mail.send(msg)
+
+    return jsonify({'message': 'Form submitted successfully!'}), 200
 
 
 @blueprint.route('/search', methods=['GET'])

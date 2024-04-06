@@ -1,37 +1,23 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Carousel, Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { url } from "../utils/url.js";
 import { useParams } from 'react-router-dom';
 
 
-
-const car = {
-  id: 1,
-  name: "Tesla Model S",
-  brand: "Tesla",
-  category: "Electric Sedan",
-  transmission: "Automatic",
-  year: 2022,
-  model: "Model S",
-  drive_type: "AWD",
-  engine: "Electric",
-  fuel_type: "Electric",
-  image_url: "/img/tmit.jpeg", // URL to the image of the car
-};
-
-const images = [
-  { id: 1, image_url: "/img/tmit.jpeg" },
-  { id: 2, image_url: "/img/tmit.jpeg" },
-  { id: 3, image_url: "/img/tmit.jpeg" },
-  // Add more image URLs as needed
-];
-
 function Vehicle() {
   const { location, vehicleId } = useParams();
 
     const [cars, setCars] = useState([]);
+      const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+
     console.log(location)
 
   
@@ -52,8 +38,35 @@ function Vehicle() {
 
 console.log(cars)
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Send form data to backend server
+    axios.post(`${url}/message`, { formData, cars })
+      .then(response => {
+        console.log('Form submitted successfully');
+        toast.success('Request submitted successfully!');
+      })
+      .catch(error => {
+        console.error('Error submitting form:', error);
+      });
+    
+    // Clear form fields after submission
+    setFormData({
+      name: '',
+      email: '',
+      message: ''
+    });
+  };
+
+
+
   return (
  <Container className="mt-4">
+ <ToastContainer />
       <Row>
         <Col md={6}>
           <Carousel style={{ width: "100%", maxWidth: "500px" }}>
@@ -80,19 +93,19 @@ console.log(cars)
             </Card.Body>
           </Card>
           <div className="mt-4">
-            <h4>Contact Seller</h4>
-            <Form>
+            <h4>Request call back</h4>
+ <Form onSubmit={handleSubmit}>
               <Form.Group controlId="formBasicName">
                 <Form.Label>Name</Form.Label>
-                <Form.Control type="text" placeholder="Enter your name" />
+                <Form.Control type="text" placeholder="Enter your name" name="name" value={formData.name} onChange={handleChange} />
               </Form.Group>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter your email" />
+                <Form.Control type="email" placeholder="Enter your email" name="email" value={formData.email} onChange={handleChange} />
               </Form.Group>
               <Form.Group controlId="formBasicMessage">
                 <Form.Label>Message</Form.Label>
-                <Form.Control as="textarea" rows={3} placeholder="Enter your message" />
+                <Form.Control as="textarea" rows={3} placeholder="Enter your message" name="message" value={formData.message} onChange={handleChange} />
               </Form.Group>
               <Button variant="primary" type="submit">
                 Submit

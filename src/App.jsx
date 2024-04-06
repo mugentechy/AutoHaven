@@ -7,14 +7,14 @@ import Contact from './pages/Contact';
 import Footer from './components/Footer';
 import Nav from './components/Nav';
 import './assets/css/layout.css';
-import ScrollToTop from './components/ScrollToTop';
+
 
 function Main() {
   const location = useLocation(); // Using useLocation inside Main component
   return (
     <>
       <Nav />
-      <ScrollToTop/>
+   
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />

@@ -1,11 +1,14 @@
 from flask import Flask
 from flask_cors import CORS
+from flask_mail import Mail
 from app.config import configurations
 
 cors = CORS()
+mail = Mail()
 
 def register_extensions(app):
     cors.init_app(app)
+    mail.init_app(app)
     
 
 def register_blueprints(app):

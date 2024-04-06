@@ -1,6 +1,42 @@
-import React from 'react';
+import React,{ useState} from 'react';
 import { Carousel, Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
+import axios from 'axios';
+import { url } from "../utils/url.js";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const ContactPage = () => {
+    const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Send contact form data to backend server
+    axios.post(`${url}/contact`, { formData })
+      .then(response => {
+        console.log('Contact form submitted successfully');
+        // Show success toast
+        toast.success('Contact form submitted successfully!');
+      })
+      .catch(error => {
+        console.error('Error submitting contact form:', error);
+      });
+    
+    // Clear form fields after submission
+    setFormData({
+      name: '',
+      email: '',
+      message: ''
+    });
+  };
+
   return (
     <>
     <div className="page-header min-vh-50" style={{ backgroundImage: 'url(/img/about-bg.jpg)' }}>
@@ -14,6 +50,7 @@ const ContactPage = () => {
         </div>
       </div>
     </div>
+    <ToastContainer />
 
     <div className="card card-body shadow-xl">
       <section className="py-2">
@@ -56,32 +93,38 @@ const ContactPage = () => {
           </div>
         </div>
         <div className="col-lg-8">
-          <form className="card-body shadow-xl" method="post" action="{{ url_for('home_blueprint.index') }}">
-            <input type="hidden" name="contact" />
-            {/* Form fields */}
-            <div className="row">
-              <div className="col-md-6 text-end ms-auto">
-                <button type="submit" className="btn bg-gradient-warning mb-0">SCHEDULE A TEST DRIVE</button>
-                            <Form>
-              <Form.Group controlId="formBasicName">
-                <Form.Label>Name</Form.Label>
-                <Form.Control type="text" placeholder="Enter your name" />
-              </Form.Group>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter your email" />
-              </Form.Group>
-              <Form.Group controlId="formBasicMessage">
-                <Form.Label>Message</Form.Label>
-                <Form.Control as="textarea" rows={3} placeholder="Enter your message" />
-              </Form.Group>
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
-            </Form>
+    <form className="card-body shadow-xl" onSubmit={handleSubmit}>
+              {/* Form fields */}
+              <div className="row">
+                <div className="col-md-6">
+                  <Form.Group controlId="formBasicName">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control type="text" placeholder="Enter your name" name="name" value={formData.name} onChange={handleChange} />
+                  </Form.Group>
+                </div>
+                <div className="col-md-6">
+                  <Form.Group controlId="formBasicEmail">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control type="email" placeholder="Enter your email" name="email" value={formData.email} onChange={handleChange} />
+                  </Form.Group>
+                </div>
               </div>
-            </div>
-          </form>
+              <div className="row">
+                <div className="col-md-12">
+                  <Form.Group controlId="formBasicMessage">
+                    <Form.Label>Message</Form.Label>
+                    <Form.Control as="textarea" rows={3} placeholder="Enter your message" name="message" value={formData.message} onChange={handleChange} />
+                  </Form.Group>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12 text-end">
+                  <Button variant="primary" type="submit">
+                    Submit
+                  </Button>
+                </div>
+              </div>
+            </form>
         </div>
       </div>
     </div>
